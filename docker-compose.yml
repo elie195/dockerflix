@@ -12,5 +12,5 @@ bind:
     - "53:53/udp"
   net: host
   volumes:
-    - bind/config:/data
+    - ./bind/config:/data
   restart: always 
