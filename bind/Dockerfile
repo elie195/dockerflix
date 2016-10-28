@@ -1,0 +1,26 @@
+FROM phusion/baseimage:0.9.17
+MAINTAINER El-ad Blech <elie@theinfamousblix.com.com>
+
+ENV DATA_DIR=/data \
+    BIND_USER=bind
+
+#RUN apt-key update
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 40976EAF437D05B5
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 16126D3A3E5C1192
+RUN apt-get -qq update && apt-key update && apt-get -y install python-software-properties bind9 bind9utils
+#RUN apt-get -y install python-software-properties bind9 bind9utils
+
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
+
+# Final cleanup
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+EXPOSE 53/udp 53/tcp
+VOLUME /data
+
+# Use baseimage-docker's init system.
+#CMD ["/sbin/my_init"]
+
+ENTRYPOINT ["/sbin/entrypoint.sh"]
+CMD ["/usr/sbin/named"]

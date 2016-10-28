@@ -5,11 +5,12 @@ us:
   - "80:80"
   - "443:443"
   restart: always
-  
-uk:
-  build: .
-  dockerfile: dockerflix.uk
+bind:
+  build: bind
+  dockerfile: Dockerfile
   ports:
-  - "80:80"
-  - "443:443"
-  restart: always
+    - "53:53/udp"
+  net: host
+  volumes:
+    - bind/config:/data
+  restart: always 
