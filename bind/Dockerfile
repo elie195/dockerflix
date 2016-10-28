@@ -4,7 +4,7 @@ MAINTAINER El-ad Blech <elie@theinfamousblix.com.com>
 ENV DATA_DIR=/data \
     BIND_USER=bind
 
-RUN apt-get -qq update && apt-key update && apt-get -y install python-software-properties bind9 bind9utils
+RUN apt-get -qq update && apt-get -y install python-software-properties bind9 bind9utils
 
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
